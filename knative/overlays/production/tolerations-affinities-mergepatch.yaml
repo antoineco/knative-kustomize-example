@@ -1,0 +1,66 @@
+# This file contains the strategic merge patches that are used by kustomize to
+# generate the final assets.
+#
+# The same pattern can be applied to
+#
+#   - imc-controller
+#   - imc-dispatcher
+#   - mt-broker-controller
+#   - mt-broker-filter
+#   - mt-broker-ingress
+#   -...
+#
+# The disadvantage of this approach over the JSON patch is that values need to
+# be repeated for every object to patch, which is verbose.
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eventing-controller
+spec:
+  template:
+    spec:
+
+      tolerations:
+      - effect: NoSchedule
+        operator: Equal
+        key: node-pool
+        value: control-plane
+
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: node-pool
+                operator: In
+                values:
+                - control-plane
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eventing-webhook
+spec:
+  template:
+    spec:
+
+      tolerations:
+      - effect: NoSchedule
+        operator: Equal
+        key: node-pool
+        value: control-plane
+
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: node-pool
+                operator: In
+                values:
+                - control-plane

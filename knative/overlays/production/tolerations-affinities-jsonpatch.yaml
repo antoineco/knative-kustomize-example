@@ -1,0 +1,18 @@
+- op: add
+  path: /spec/template/spec/tolerations
+  value:
+    - effect: NoSchedule
+      operator: Equal
+      key: node-pool
+      value: control-plane
+
+- op: add
+  path: /spec/template/spec/affinity/nodeAffinity
+  value:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: node-pool
+          operator: In
+          values:
+          - control-plane

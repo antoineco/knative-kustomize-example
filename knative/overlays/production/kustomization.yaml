@@ -1,0 +1,25 @@
+bases:
+- ../../base
+
+## Using either a strategic merge patch...
+
+patchesStrategicMerge:
+- tolerations-affinities-mergepatch.yaml
+
+## ... or the JSON patch equivalent.
+
+#patchesJson6902:
+#
+#- path: tolerations-affinities-jsonpatch.yaml
+#  target:
+#    group: apps
+#    version: v1
+#    kind: Deployment
+#    name: eventing-controller
+#
+#- path: tolerations-affinities-jsonpatch.yaml
+#  target:
+#    group: apps
+#    version: v1
+#    kind: Deployment
+#    name: eventing-webhook

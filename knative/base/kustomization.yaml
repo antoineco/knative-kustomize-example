@@ -1,0 +1,3 @@
+resources:
+  # Untouched Knative Eventing v0.20.1 release manifest
+- eventing.yaml
